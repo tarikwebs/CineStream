@@ -2,61 +2,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CineStream | سینمای آنلاین</title>
+  <title>CineStream | تماشای آنلاین فیلم</title>
   <style>
     body {
-      font-family: sans-serif;
       margin: 0;
-      padding: 0;
-      background: #111;
+      font-family: Vazirmatn, sans-serif;
+      background-color: #0d0d0d;
       color: #fff;
     }
     header, footer {
-      background: #222;
-      padding: 1rem;
+      background-color: #1c1c1c;
       text-align: center;
+      padding: 1rem;
     }
-    h1 { color: #00e0ff; }
+    header h1 {
+      color: #00ffd5;
+      margin: 0;
+    }
     nav a {
+      color: #ccc;
       margin: 0 1rem;
-      color: #aaa;
       text-decoration: none;
     }
-    nav a:hover { color: #fff; }
-    .container {
-      padding: 2rem;
+    nav a:hover {
+      color: #fff;
+    }
+    .movies {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
     }
     .movie {
-      background: #1c1c1c;
-      padding: 1rem;
+      background: #1a1a1a;
       border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 0 10px #000;
+      transition: transform 0.2s;
+    }
+    .movie:hover {
+      transform: scale(1.02);
     }
     .movie img {
       width: 100%;
-      border-radius: 8px;
+      display: block;
+    }
+    .movie-content {
+      padding: 1rem;
     }
     .movie h3 {
-      margin-top: 0.5rem;
+      margin: 0.5rem 0;
+      color: #00ffd5;
+    }
+    .movie p {
+      font-size: 0.9rem;
+      color: #ccc;
     }
     .btn {
       display: inline-block;
       margin-top: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: #00e0ff;
+      background: #00ffd5;
       color: #000;
-      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
       text-decoration: none;
+      font-weight: bold;
     }
-    video {
+    .btn:hover {
+      background: #00bfa1;
+    }
+    .player {
+      padding: 1rem;
+      background: #141414;
+      border-top: 2px solid #00ffd5;
+    }
+    iframe {
       width: 100%;
-      border-radius: 10px;
-      margin-top: 1rem;
+      height: 360px;
+      border: none;
+      border-radius: 8px;
     }
-    footer p { margin: 0.5rem 0; }
+    footer p {
+      margin: 0.5rem 0;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .movie-content { padding: 0.5rem; }
+      iframe { height: 200px; }
+    }
   </style>
 </head>
 <body>
@@ -64,13 +97,64 @@
     <h1>CineStream 🎬</h1>
     <nav>
       <a href="#">خانه</a>
+      <a href="#categories">دسته‌بندی</a>
       <a href="#about">درباره ما</a>
       <a href="#contact">پشتیبانی</a>
     </nav>
-  </header>  <section class="container">
-    <div class="movie">
-      <img src="https://image.tmdb.org/t/p/w500/nCbkOyOMTePnp0yC3n1yZ4wKYGE.jpg" alt="Interstellar">
-      <h3>Interstellar</h3>
-      <p>ژانر: علمی تخیلی</p>
-      <video controls>
-        <source src="https://dl.irsv.top/video/Interstellar-Tra
+  </header>  <section id="categories" style="padding: 1rem; text-align: center;">
+    <strong>دسته‌بندی: </strong>
+    <button onclick="filter('همه')">همه</button>
+    <button onclick="filter('اکشن')">اکشن</button>
+    <button onclick="filter('درام')">درام</button>
+    <button onclick="filter('ترسناک')">ترسناک</button>
+  </section>  <section class="movies" id="movie-list">
+    <div class="movie" data-genre="اکشن">
+      <img src="https://i.postimg.cc/Y2vx6mGn/movie-poster1.jpg" alt="فیلم ۱">
+      <div class="movie-content">
+        <h3>فیلم اکشن اول</h3>
+        <p>ژانر: اکشن | سال: 2024</p>
+        <a class="btn" href="https://dl.film1.com/sample1.mp4" target="_blank">تماشا / دانلود</a>
+      </div>
+    </div>
+    <div class="movie" data-genre="درام">
+      <img src="https://i.postimg.cc/4xCtzZxF/movie-poster2.jpg" alt="فیلم ۲">
+      <div class="movie-content">
+        <h3>فیلم درام دوم</h3>
+        <p>ژانر: درام | سال: 2023</p>
+        <a class="btn" href="https://dl.film2.com/sample2.mp4" target="_blank">تماشا / دانلود</a>
+      </div>
+    </div>
+    <div class="movie" data-genre="ترسناک">
+      <img src="https://i.postimg.cc/wxZbZ98S/movie-poster3.jpg" alt="فیلم ۳">
+      <div class="movie-content">
+        <h3>فیلم ترسناک</h3>
+        <p>ژانر: ترسناک | سال: 2025</p>
+        <a class="btn" href="https://dl.film3.com/sample3.mp4" target="_blank">تماشا / دانلود</a>
+      </div>
+    </div>
+  </section>  <section class="player">
+    <h2 style="text-align:center">پلیر آنلاین تست</h2>
+    <iframe src="https://archive.org/embed/BigBuckBunny_124" allowfullscreen></iframe>
+  </section>  <section id="about" style="padding: 2rem; background: #111;">
+    <h2>درباره CineStream</h2>
+    <p>پلتفرمی برای تماشای آنلاین و رایگان فیلم‌های جدید ایرانی و خارجی با کیفیت بالا. طراحی شده برای کاربران موبایل و دسکتاپ.</p>
+  </section>  <section id="contact" style="padding: 2rem; background: #181818;">
+    <h2>پشتیبانی</h2>
+    <p>تلگرام: <a href="https://t.me/shadowByte_ll" target="_blank">@shadowByte_ll</a></p>
+    <p>روبیکا: <a href="https://rubika.ir/abolfazl_imani1" target="_blank">@abolfazl_imani1</a></p>
+  </section>  <footer>
+    <p>ساخته شده توسط ابوالفضل ایمانی</p>
+    <p>&copy; 2025 CineStream</p>
+  </footer>  <script>
+    function filter(genre) {
+      const movies = document.querySelectorAll('.movie');
+      movies.forEach(movie => {
+        if (genre === 'همه' || movie.dataset.genre === genre) {
+          movie.style.display = 'block';
+        } else {
+          movie.style.display = 'none';
+        }
+      });
+    }
+  </script></body>
+</html>
